@@ -1,4 +1,4 @@
-import 'package:calculadora_imc/widgets/textfields.dart';
+import 'package:calculadora_imc/widgets/my_widgets.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,10 +12,11 @@ class _HomePageState extends State<HomePage> {
   final controllerAltura = TextEditingController();
   final controllerPeso = TextEditingController();
 
-  double res = 0;
+  double resultado = 0;
 
-  calculo() {
-    res = double.parse(controllerPeso.text) /
+  calculoDeIMC() {
+    //Converte os controllers em um valor double e realiza o calculo de IMC
+    resultado = double.parse(controllerPeso.text) /
         (double.parse(controllerAltura.text) *
             double.parse(controllerAltura.text));
   }
@@ -39,7 +40,8 @@ class _HomePageState extends State<HomePage> {
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  calculo();
+                  calculoDeIMC();
+                  //Limpa os textfields depois do cálculo
                   controllerAltura.clear();
                   controllerPeso.clear();
                 });
@@ -47,16 +49,7 @@ class _HomePageState extends State<HomePage> {
               child: const Text('Calcular'),
             ),
             const Padding(padding: EdgeInsets.only(top: 20)),
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                'IMC: ' + res.toStringAsFixed(1),
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+            myTextResultado(resultado),
           ],
         ),
       ),
